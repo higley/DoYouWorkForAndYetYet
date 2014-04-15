@@ -1,79 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+<head>
+	<title>Do you work at &amp;yet yet?</title>
+	<style>
+		input[type="text"] {border:none;border-bottom:1px solid #26ABE2;text-align:center;color:#26ABE2;font-family:'Amatic SC', cursive;width:350px; font-size:1em;}
+		p {font-size:4em; color:#EA0A8D;font-family:'Amatic SC', cursive;margin:0;}
+		div {text-align: center}
+		span {color:#26ABE2;}
+		input[type="button"] {font-family: 'Amatic SC', cursive; border-radius:6px; background-color: #26ABE2;font-size:1em;border:0;cursor:pointer;box-shadow:1px 1px silver;}
+		input[type="button"]:hover {background-color:#EA0A8D;}
+		#overlay {
+    visibility: hidden;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width:100%;
+    height:100%;
+    text-align:center;
+    z-index: 1000;
+    opacity:50%;
+    background-color:#26ABE2;
+ }
+ #message {position:absolute;top:30%;width:100%;}
+ #message input[type="button"] {background-color:#EA0A8D;}
+ #msg {color:white;}
+	</style>
+	<link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+</head>
+<body>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Doyouworkforandyetyet : " />
+	<div>
+		<p>Does<input type="text" placeholder="@twitterhandle" id="twhandle"/></p>
+		<p>work for &amp;<span>yet</span> yet?</p>
+		<p><input type="button" id="check" value="Check" onclick="checkTwitter('twhandle');"/>
+	</div>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Doyouworkforandyetyet</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/higley/DoYouWorkForAndYetYet">View on GitHub</a>
-
-          <h1 id="project_title">Doyouworkforandyetyet</h1>
-          <h2 id="project_tagline"></h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/higley/DoYouWorkForAndYetYet/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/higley/DoYouWorkForAndYetYet/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Doyouworkforandyetyet maintained by <a href="https://github.com/higley">higley</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+	<div id="overlay">
+		<p id="message"><span id="msg"></span><br/><input type="button" value="Check Another" onclick="toggleOverlay()"/></p>
+	</div>
+<script>
+	function checkTwitter(handle) {
+		var name = document.getElementById(handle).value;
+		console.log('handle: ' + name);
+		var handles = ['adambrault', 'renrutnnej', 'ericzanol', 'wraithgar', 'adam_baldwin', 'henrikjoreteg', 'philip_roberts', 'quitlahok', 'mike_speegle', 'obensource', 'nrrrdcore', 'danielchbarnes', 'sarahjbray', 'fritzy', 'stephaniemaier', 'jennadear09', 'stpeter', 'lynnandtonic', 'jon_lamendola', 'daviddias', 'lginman46', 'lukekarrys', 'aaronmccall', 'bear', '_crossdiver', 'katphurrrs', 'lancestout', 'missfelony', 'amydearest', 'fox', 'hjon', 'shadowking', 'markbrault'];
+		if(handles.indexOf(name) != -1)
+		{
+			alertYes(name);
+		}
+		else
+		{
+			alertNo(name);
+		}
+	}
+	function alertYes(name){
+		console.log("yes");
+		el = document.getElementById("overlay");
+		document.getElementById('msg').innerText = name + " DOES work for &yet"; 
+		toggleOverlay();
+	}
+	function alertNo(name){
+		console.log("no");
+		document.getElementById('msg').innerText = name + " does NOT work for &yet, yet"; 
+		toggleOverlay();
+	}
+	function toggleOverlay()
+	{
+ 		el = document.getElementById("overlay");
+  		el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+  		document.getElementById("twhandle").value = "";
+	}
+</script>
+</body>
 </html>
