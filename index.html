@@ -9,28 +9,17 @@
 		span {color:#26ABE2;}
 		input[type="button"] {font-family: 'Amatic SC', cursive; border-radius:6px; background-color: #26ABE2;font-size:1em;border:0;cursor:pointer;box-shadow:1px 1px silver;}
 		input[type="button"]:hover {background-color:#EA0A8D;}
-		#overlay {
-    visibility: hidden;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width:100%;
-    height:100%;
-    text-align:center;
-    z-index: 1000;
-    opacity:50%;
-    background-color:#26ABE2;
- }
- #message {position:absolute;top:30%;width:100%;}
- #message input[type="button"] {background-color:#EA0A8D;}
- #msg {color:white;}
+		#overlay {visibility: hidden;position: absolute;left: 0px;top: 0px;width:100%;height:100%;text-align:center;z-index: 1000;background-color:#26ABE2;}
+		 #message {position:absolute;top:30%;width:100%;}
+		 #message input[type="button"] {background-color:#EA0A8D;}
+		 #msg {color:white;}
 	</style>
 	<link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 	<div>
-		<p>Does<input type="text" placeholder="@twitterhandle" id="twhandle"/></p>
+		<p>Does<input type="text" placeholder="@twitter-handle" id="twhandle"/></p>
 		<p>work for &amp;<span>yet</span> yet?</p>
 		<p><input type="button" id="check" value="Check" onclick="checkTwitter('twhandle');"/>
 	</div>
@@ -41,25 +30,25 @@
 <script>
 	function checkTwitter(handle) {
 		var name = document.getElementById(handle).value;
-		console.log('handle: ' + name);
-		var handles = ['adambrault', 'renrutnnej', 'ericzanol', 'wraithgar', 'adam_baldwin', 'henrikjoreteg', 'philip_roberts', 'quitlahok', 'mike_speegle', 'obensource', 'nrrrdcore', 'danielchbarnes', 'sarahjbray', 'fritzy', 'stephaniemaier', 'jennadear09', 'stpeter', 'lynnandtonic', 'jon_lamendola', 'daviddias', 'lginman46', 'lukekarrys', 'aaronmccall', 'bear', '_crossdiver', 'katphurrrs', 'lancestout', 'missfelony', 'amydearest', 'fox', 'hjon', 'shadowking', 'markbrault'];
-		if(handles.indexOf(name) != -1)
+		if(name != "")
 		{
-			alertYes(name);
-		}
-		else
-		{
-			alertNo(name);
+			var handles = ['adambrault', 'renrutnnej', 'ericzanol', 'wraithgar', 'adam_baldwin', 'henrikjoreteg', 'philip_roberts', 'quitlahok', 'mike_speegle', 'obensource', 'nrrrdcore', 'danielchbarnes', 'sarahjbray', 'fritzy', 'stephaniemaier', 'jennadear09', 'stpeter', 'lynnandtonic', 'jon_lamendola', 'daviddias', 'lginman46', 'lukekarrys', 'aaronmccall', 'bear', '_crossdiver', 'katphurrrs', 'lancestout', 'missfelony', 'amydearest', 'fox', 'hjon', 'shadowking', 'markbrault'];
+			if(handles.indexOf(name) != -1)
+			{
+				alertYes(name);
+			}
+			else
+			{
+				alertNo(name);
+			}
 		}
 	}
 	function alertYes(name){
-		console.log("yes");
 		el = document.getElementById("overlay");
 		document.getElementById('msg').innerText = name + " DOES work for &yet"; 
 		toggleOverlay();
 	}
 	function alertNo(name){
-		console.log("no");
 		document.getElementById('msg').innerText = name + " does NOT work for &yet, yet"; 
 		toggleOverlay();
 	}
