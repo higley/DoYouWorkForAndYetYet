@@ -5,8 +5,9 @@
     <title>Do you work at &amp;yet yet?</title>
     <style>
     html {
-        font-size:100%;
+        font-size:100%;min-height: 100%;margin:0;overflow: hidden;
     }
+    body { min-height:100%;margin:0;overflow: hidden}
     @media (max-width: 640px) {
         body, input {
             font-size:4rem;
@@ -60,7 +61,7 @@
     }
     #overlay {
         visibility: hidden;
-        position: absolute;
+        position: fixed;
         left: 0px;
         top: 0px;
         width:100%;
@@ -68,6 +69,7 @@
         text-align:center;
         z-index: 1000;
         background-color:#26ABE2;
+        overflow: auto;
     }
     #message {
         position:absolute;
@@ -80,6 +82,9 @@
     #msg {
         color:white;
     }
+    a, a:visited, a:link {color:#EA0A8D;text-decoration: none;border-bottom:2px solid #EA0A8D;}
+    a:hover {color:silver;border-color:silver;}
+    ul, li {margin:0;padding:0;list-style-type:none;}
     </style>
     <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
 </head>
@@ -88,7 +93,7 @@
 
     <div>
         <p>Does
-            <input type="text" placeholder="@twitter-handle" id="twhandle" />
+            <input type="text" placeholder="@twitter-handle" id="twhandle" maxlength="15" />
         </p>
         <p>work for &amp;
             <span>yet</span>yet?</p>
@@ -105,11 +110,16 @@
     </div>
     <script>
     function checkTwitter(handle) {
-        var name = document.getElementById(handle).value.toLowerCase().replace('@', '');
+        var name = document.getElementById(handle).value.toLowerCase().replace(/[^\w]/gi, '');
         if (name != "") {
             var handles = ['adambrault', 'renrutnnej', 'ericzanol', 'wraithgar', 'adam_baldwin', 'henrikjoreteg', 'philip_roberts', 'quitlahok', 'mike_speegle', 'obensource', 'nrrrdcore', 'danielchbarnes', 'sarahjbray', 'fritzy', 'stephaniemaier', 'jennadear09', 'stpeter', 'lynnandtonic', 'jon_lamendola', 'daviddias', 'lginman46', 'lukekarrys', 'aaronmccall', 'bear', '_crossdiver', 'katphurrrs', 'lancestout', 'missfelony', 'amydearest', 'fox', 'hjon', 'shadowking', 'markbrault'];
             if (handles.indexOf(name) != -1) {
-                alertYes(name);
+            	if(name == 'katphurrrs') {
+            		alertSpecial(handles);
+            	}
+            	else {
+                	alertYes(name);
+            	}
             } else {
                 alertNo(name);
             }
@@ -118,15 +128,26 @@
 
     function alertYes(name) {
         el = document.getElementById("overlay");
-        document.getElementById('msg').innerText = name + " DOES work for &yet";
+        document.getElementById('msg').innerHTML = "<a href='http://twitter.com/" + name + "' target='_blank'>" + name.replace('_', ' ') + "</a> DOES work for &yet";
         toggleOverlay();
     }
 
     function alertNo(name) {
-        document.getElementById('msg').innerText = name + " does NOT work for &yet, yet";
+        document.getElementById('msg').innerHTML = "<a href='http://twitter.com/" + name + "' target='_blank'>" + name.replace('_', ' ') + "</a> does NOT work for &yet, yet";
         toggleOverlay();
     }
-
+    function alertSpecial(handles)
+    {
+    	var len = handles.length;
+    	handles.sort();
+    	var msg = '';
+    	for(var i=0;i<len;i++)
+    	{
+    		msg += "<li><a href='http://twitter.com/" + handles[i] + "'>" + handles[i].replace('_', ' ') + "</a></li>";
+    	}
+    	document.getElementById('msg').innerHTML = "<p><img src='https://pbs.twimg.com/profile_images/2209981952/imgres.jpeg'/></p><p style='color:white;'>You found me! Here's all the wonderful folks who work for &amp;yet!</p><ul>" + msg + "</ul>";
+    	toggleOverlay();
+    }
     function toggleOverlay() {
         el = document.getElementById("overlay");
         el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
