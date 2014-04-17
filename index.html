@@ -104,13 +104,13 @@
     <div id="overlay">
         <p id="message">
             <span id="msg"></span>
-            <br/>
+            <br/><br/>
             <input type="button" value="Check Another" onclick="toggleOverlay()" />
         </p>
     </div>
     <script>
     function checkTwitter(handle) {
-        var name = document.getElementById(handle).value.toLowerCase().replace(/[^\w]/gi, '');
+        var name = document.getElementById(handle).value.toLowerCase().replace(/[^\w]/gi, '').substring(0,15);
         if (name != "") {
             var handles = ['adambrault', 'renrutnnej', 'ericzanol', 'wraithgar', 'adam_baldwin', 'henrikjoreteg', 'philip_roberts', 'quitlahok', 'mike_speegle', 'obensource', 'nrrrdcore', 'danielchbarnes', 'sarahjbray', 'fritzy', 'stephaniemaier', 'jennadear09', 'stpeter', 'lynnandtonic', 'jon_lamendola', 'daviddias', 'lginman46', 'lukekarrys', 'aaronmccall', 'bear', '_crossdiver', 'katphurrrs', 'lancestout', 'missfelony', 'amydearest', 'fox', 'hjon', 'shadowking', 'markbrault'];
             if (handles.indexOf(name) != -1) {
@@ -153,6 +153,15 @@
         el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
         document.getElementById("twhandle").value = "";
     }
+    function getQueryStringValue (key) {  
+	  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+	}  
+	function loadFromQueryString() {
+		var qs = getQueryStringValue('q');
+		document.getElementById('twhandle').value = qs;
+		checkTwitter('twhandle');
+	}
+	window.addEventListener("load", loadFromQueryString, false);
     </script>
 </body>
 
